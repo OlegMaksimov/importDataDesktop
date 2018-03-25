@@ -1,15 +1,19 @@
-package sample;
+package sample.Controller;
 
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sample.inputFileService.IImportFile;
 
 import java.io.File;
 
+
 public class Controller {
 
+    static String F_PATH = null;
+
     @FXML
-    public void openImportFile(){
+    public void openImportFile() throws Exception {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().addAll(
@@ -19,8 +23,9 @@ public class Controller {
         Stage stage = new Stage();
         File selectedFile = fileChooser.showOpenDialog(stage);
         if (selectedFile != null) {
-            System.out.println(selectedFile.getAbsolutePath());
+            F_PATH = selectedFile.getAbsolutePath();
+        } else {
+            throw new Exception("Can't open file");
         }
-
     }
 }
