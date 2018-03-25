@@ -2,6 +2,8 @@ package sample.inputFileService;
 
 
 
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import oracle.jdbc.driver.OracleConnection;
 import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggerFactory;
@@ -40,6 +42,8 @@ public interface IImportFile<T> {
     public default void insertToDB(OracleConnection connection, List recordList, String tableName) throws Exception {
         logger.info("start");
 
+        final ProgressBar bar =  new ProgressBar(0);
+        final ProgressIndicator pi = new ProgressIndicator(0);
         StringBuilder stringBuilder = new StringBuilder();
         Integer count = 0;
         String str = "";
