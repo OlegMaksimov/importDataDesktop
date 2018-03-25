@@ -22,14 +22,14 @@ public class EXLIImportFileImplTest {
     @Before
     public void setUp() throws Exception {
         path = "strah_polis_new1.xlsx";
-        importFile = new EXLIImportFileImpl();
+        importFile = new EXLIImportFileImpl(path);
         tableName = "POLIC";
     }
 
     @Test
     public void parsingFile() {
         long start = System.currentTimeMillis();
-        List list = importFile.parsingFile(path, tableName);
+        List list = importFile.parsingFile( tableName);
         System.out.println(list.get(1));
         long finish = System.currentTimeMillis();
         logger.info("Время выполнения " + (finish - start));
@@ -38,7 +38,7 @@ public class EXLIImportFileImplTest {
     @Test
     public void testInsertToDB() throws Exception {
         long start = System.currentTimeMillis();
-        List list = importFile.parsingFile(path, tableName);
+        List list = importFile.parsingFile( tableName);
         importFile.insertToDB(connection, list, tableName);
         long finish = System.currentTimeMillis();
         logger.info("Время выполнения " + (finish - start));

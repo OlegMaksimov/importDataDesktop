@@ -21,10 +21,17 @@ public class CSVIImportFileImpl implements IImportFile {
 
     private final OracleConnection connection = JdbcConnection.getInstance().getConnection();
     Logger logger = Logger.getLogger(this.getClass());
-//    java.util.logging.Logger logger = java.util.logging.Logger.getLogger("CSVIImportFileImpl");
+
+    private String filename;
+
+    public CSVIImportFileImpl(String filename) {
+        this.filename = filename;
+    }
+
+    //    java.util.logging.Logger logger = java.util.logging.Logger.getLogger("CSVIImportFileImpl");
     @Override
-    public List parsingFile(String fileName, String tableName) {
-        Path path = Paths.get(fileName);
+    public List parsingFile(String tableName) {
+        Path path = Paths.get(this.filename);
         logger.info("start");
         try {
 

@@ -15,7 +15,7 @@ public interface IImportFile<T> {
     Logger logger = Logger.getLogger("IImportFile");
 
 
-    public List parsingFile(String fileName, String tableName);
+    public List parsingFile( String tableName);
 
     public default void createTable(OracleConnection connection, Integer colNum, String tableName, Integer lenghtField){
         logger.info("start");

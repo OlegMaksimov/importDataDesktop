@@ -18,13 +18,18 @@ import java.util.StringJoiner;
 
 public class EXLIImportFileImpl implements IImportFile {
     private final OracleConnection connection = JdbcConnection.getInstance().getConnection();
+    private String filename;
+
+    public EXLIImportFileImpl(String filename) {
+        this.filename = filename;
+    }
 
     public EXLIImportFileImpl() {
     }
 
 
     @Override
-    public List parsingFile(String fileName, String tableName) {
+    public List parsingFile(String tableName) {
        /* logger.info("start");
         List tmp = new ArrayList();
         Integer count = 0;
@@ -33,7 +38,7 @@ public class EXLIImportFileImpl implements IImportFile {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         StringJoiner joiner3 = new StringJoiner(",");
         try {
-            XSSFWorkbook myExcelBook = new XSSFWorkbook(new FileInputStream(fileName));
+            XSSFWorkbook myExcelBook = new XSSFWorkbook(new FileInputStream(this.fileName));
             for (Iterator<XSSFSheet> it = myExcelBook.iterator(); it.hasNext(); ) {
                 XSSFSheet sheet = it.next();
                 Iterator<Row> rowIterator = sheet.iterator();

@@ -24,20 +24,20 @@ public class CSVIImportFileImplTest {
     @Before
     public void setUp() throws Exception {
         path = "c:\\Users\\LSultanova\\Desktop\\import_pac\\patient.csv";
-        importFile = new CSVIImportFileImpl();
+        importFile = new CSVIImportFileImpl(path);
         tableName = "table_name2";
     }
 
     @Test
     public void testParsingFile() {
-        List list = importFile.parsingFile(path, tableName);
+        List list = importFile.parsingFile( tableName);
         System.out.println(list.get(1));
     }
 
     @Test
     public void testInsertToDB() throws Exception {
         long start = System.currentTimeMillis();
-        List list = importFile.parsingFile(path, tableName);
+        List list = importFile.parsingFile( tableName);
         importFile.insertToDB(connection, list, tableName);
         long finish = System.currentTimeMillis();
         logger.info("Время выполнения "+(finish-start));
