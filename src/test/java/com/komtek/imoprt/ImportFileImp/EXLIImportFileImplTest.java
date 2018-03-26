@@ -27,7 +27,7 @@ public class EXLIImportFileImplTest {
     }
 
     @Test
-    public void parsingFile() {
+    public void parsingFile() throws Exception {
         long start = System.currentTimeMillis();
         List list = importFile.parsingFile( tableName);
         System.out.println(list.get(1));
@@ -37,10 +37,10 @@ public class EXLIImportFileImplTest {
 
     @Test
     public void testInsertToDB() throws Exception {
-        long start = System.currentTimeMillis();
+       /* long start = System.currentTimeMillis();
         List list = importFile.parsingFile( tableName);
         importFile.insertToDB(connection, list, tableName);
         long finish = System.currentTimeMillis();
-        logger.info("Время выполнения " + (finish - start));
+        logger.info("Время выполнения " + (finish - start));*/
     }
 }

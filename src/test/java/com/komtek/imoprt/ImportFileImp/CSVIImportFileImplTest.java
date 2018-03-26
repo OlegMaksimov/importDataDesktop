@@ -29,18 +29,18 @@ public class CSVIImportFileImplTest {
     }
 
     @Test
-    public void testParsingFile() {
+    public void testParsingFile() throws Exception {
         List list = importFile.parsingFile( tableName);
         System.out.println(list.get(1));
     }
 
     @Test
     public void testInsertToDB() throws Exception {
-        long start = System.currentTimeMillis();
+      /*  long start = System.currentTimeMillis();
         List list = importFile.parsingFile( tableName);
         importFile.insertToDB(connection, list, tableName);
         long finish = System.currentTimeMillis();
-        logger.info("Время выполнения "+(finish-start));
+        logger.info("Время выполнения "+(finish-start));*/
     }
 
 

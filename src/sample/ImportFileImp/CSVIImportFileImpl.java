@@ -30,9 +30,9 @@ public class CSVIImportFileImpl implements IImportFile {
 
     //    java.util.logging.Logger logger = java.util.logging.Logger.getLogger("CSVIImportFileImpl");
     @Override
-    public List parsingFile(String tableName) {
+    public List parsingFile(String tableName) throws Exception {
         Path path = Paths.get(this.filename);
-        logger.info("start");
+        logger.debug("start");
         try {
 
             List temp = Files.readAllLines(path, Charset.forName("windows-1251"));
@@ -60,8 +60,8 @@ public class CSVIImportFileImpl implements IImportFile {
 
             String row = (String) temp.get(0);
             // TODO: 14.03.2018  ошибка при повторном создании таблицы 
-//            createTable(connection, row.split(";").length, tableName, 500);
-            logger.info("end");
+            createTable(connection, row.split(";").length, tableName, 500);
+            logger.debug("end");
             return result;
         } catch (IOException e) {
             logger.error(e.getMessage());

@@ -2,11 +2,14 @@ package sample.inputFileService;
 
 
 
+import com.sun.javafx.tk.Toolkit;
+import javafx.concurrent.Task;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import oracle.jdbc.driver.OracleConnection;
 import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggerFactory;
+import sample.Controller.Controller;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -17,11 +20,11 @@ public interface IImportFile<T> {
     Logger logger = Logger.getLogger("IImportFile");
 
 
-    public List parsingFile( String tableName);
+    public List parsingFile( String tableName) throws Exception;
 
-    public default void createTable(OracleConnection connection, Integer colNum, String tableName, Integer lenghtField){
+    public default void createTable(OracleConnection connection, Integer colNum, String tableName, Integer lenghtField) throws Exception {
         logger.info("start");
-        logger.info("colNum " + colNum + " tableName " + tableName + "lenghtFile " + lenghtField);
+        logger.debug("colNum " + colNum + " tableName " + tableName + "lenghtFile " + lenghtField);
         String sql = "{ call PKG_IMPEXP.P_CREATE_TABLE(?,?,?) }";
         try {
             PreparedStatement proc = connection.prepareCall(sql);
@@ -31,41 +34,28 @@ public interface IImportFile<T> {
             proc.execute();
         } catch (SQLException e) {
            logger.error(e.getSQLState());
+           throw new SQLException(e);
         } catch (Exception e) {
             logger.error(e.getMessage());
+            throw new Exception(e);
         }
         logger.info("end");
     }
 
     ;
 
-    public default void insertToDB(OracleConnection connection, List recordList, String tableName) throws Exception {
-        logger.info("start");
-
-        final ProgressBar bar =  new ProgressBar(0);
-        final ProgressIndicator pi = new ProgressIndicator(0);
-        StringBuilder stringBuilder = new StringBuilder();
-        Integer count = 0;
-        String str = "";
-        try {
-            Statement statement = connection.createStatement();
-
-            for (Object obj : recordList
-                    ) {
-                str = (String) obj;
-                statement.executeQuery(str);
-                count++;
-                System.out.println(count);
-            }
-            statement.executeQuery("COMMIT; ");
+    public default void insertToDB( Statement statement, String record) throws Exception {
+        logger.debug("start");
+        try{
+                statement.executeQuery(record);
+            statement.executeQuery("COMMIT");
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            logger.error(str);
+            logger.error(record);
             throw new Exception("Ошибка при импорте");
         }
-
-        logger.info("end");
+        logger.debug("end");
     }
 
-    ;
+
 }

@@ -12,10 +12,11 @@
   <children>
     <Button layoutX="231.0" layoutY="68.0" mnemonicParsing="false" onAction="#openImportFile" text="открыть файл" />
     <Button layoutX="231.0" layoutY="123.0" mnemonicParsing="false" onAction="#onClickImportData" prefHeight="27.0" prefWidth="106.0" text="импорт" />
-    <ProgressBar layoutX="38.0" layoutY="127.0" prefHeight="20.0" prefWidth="174.0" progress="0.0" />
+    <ProgressBar fx:id="pgrBar" layoutX="38.0" layoutY="127.0" prefHeight="20.0" prefWidth="174.0" progress="0.0" />
     <Label fx:id="filename" layoutX="118.0" layoutY="73.0" text="filename" />
     <TextField fx:id="tableName" layoutX="38.0" layoutY="35.0" prefWidth="174.0" />
     <Label layoutX="251.0" layoutY="38.0" text="Имя таблицы" />
     <Label fx:id="lblWarn" layoutX="38.0" layoutY="14.0" text="Необходимо заполнить имя таблицы" textFill="#ff3333" visible="false" />
+    <ProgressIndicator fx:id="pgrInd" layoutX="9.0" layoutY="127.0" progress="0.0" />
   </children>
 </AnchorPane>
