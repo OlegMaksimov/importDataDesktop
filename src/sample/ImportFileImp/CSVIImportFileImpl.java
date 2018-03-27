@@ -49,6 +49,7 @@ public class CSVIImportFileImpl implements IImportFile {
                         stringJoiner = new StringJoiner(",");
                         for (int i = 0; i < strarr.length; i++) {
 
+                            strarr[i] = strarr[i].replaceAll("'", "''");
                             stringJoiner.add(strarr[i].replaceAll("\"", "'"));
                         }
                         str += stringJoiner.toString();
