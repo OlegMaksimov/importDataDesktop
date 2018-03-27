@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oracle.jdbc.driver.OracleConnection;
@@ -15,7 +17,11 @@ import sample.Task.ImportData;
 import sample.inputFileService.IImportFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 
 
 public class Controller {
@@ -36,8 +42,20 @@ public class Controller {
     @FXML
     public ProgressIndicator pgrInd;
 
+    /**--------------------------------------Connect to BD---------------------------------------------*/
+    @FXML
+    private TextField BDURL;
+    @FXML
+    private TextField BDuser;
+    @FXML
+    private TextField BDpass;
+    @FXML
+    private Label BdStatus;
+
+
     @FXML
     public void openImportFile() throws Exception {
+        logger.debug("OPEN");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().addAll(
@@ -59,8 +77,6 @@ public class Controller {
 
     @FXML
     public void onClickImportData() throws Exception {
-
-
         List list;
         if (!(FILE == null)){
             if(!(tableName.getText().isEmpty())){
@@ -80,8 +96,38 @@ public class Controller {
         }
     }
 
+    @FXML
+    public void onTestConnection(){
+        if (!BDURL.getText().isEmpty()||!BDpass.getText().isEmpty()||!BDuser.getText().isEmpty()) {
+            try {
+                if (JdbcConnection.testConnection(BDURL.getText(), BDuser.getText(), BDpass.getText())) {
+                    BdStatus.setText("Success");
+                    BdStatus.setTextFill(Paint.valueOf("GREEN"));
+                    BdStatus.setVisible(true);
+                } else {
+                    BdStatus.setText("FAIL");
+                    BdStatus.setTextFill(Paint.valueOf("RED"));
+                    BdStatus.setVisible(true);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+           BdStatus.setText("Необходимо заполнить поля.");
+            BdStatus.setVisible(true);
+        }
+    }
 
+    @FXML
+    public void onApplyProperty(){
+        if (!BDURL.getText().isEmpty()||!BDpass.getText().isEmpty()||!BDuser.getText().isEmpty()) {
+            JdbcConnection.destroyAndReCreate(BDURL.getText(),BDuser.getText(),BDpass.getText());
+        } else {
+            BdStatus.setText("Необходимо заполнить поля.");
+            BdStatus.setVisible(true);
+        }
 
+    }
 
     public  void setProgres(Double progres) throws Exception {
         try {

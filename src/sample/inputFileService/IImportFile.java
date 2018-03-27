@@ -45,7 +45,7 @@ public interface IImportFile<T> {
     ;
 
     public default void insertToDB( Statement statement, String record) throws Exception {
-        logger.debug("start");
+        logger.info("start");
         try{
                 statement.executeQuery(record);
             statement.executeQuery("COMMIT");
@@ -54,7 +54,7 @@ public interface IImportFile<T> {
             logger.error(record);
             throw new Exception("Ошибка при импорте");
         }
-        logger.debug("end");
+        logger.info("end");
     }
 
 
