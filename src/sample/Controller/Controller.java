@@ -60,7 +60,8 @@ public class Controller {
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().addAll(
 //                new FileChooser.ExtensionFilter("Text Files", "*.txt")
-                new FileChooser.ExtensionFilter("Text Files", "*.csv")
+                new FileChooser.ExtensionFilter("CSV Files", "*.csv"),
+                new FileChooser.ExtensionFilter("Excel Files", "*.xlsx")
       );
         Stage stage = new Stage();
         File selectedFile = fileChooser.showOpenDialog(stage);

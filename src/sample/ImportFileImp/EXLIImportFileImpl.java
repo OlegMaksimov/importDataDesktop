@@ -1,17 +1,16 @@
 package sample.ImportFileImp;
 
-
-
 import oracle.jdbc.driver.OracleConnection;
-
-
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import sample.Connection.JdbcConnection;
 import sample.inputFileService.IImportFile;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringJoiner;
@@ -30,7 +29,7 @@ public class EXLIImportFileImpl implements IImportFile {
 
     @Override
     public List parsingFile(String tableName) {
-       /* logger.info("start");
+        logger.info("start");
         List tmp = new ArrayList();
         Integer count = 0;
         String rowSTR = "";
@@ -38,11 +37,12 @@ public class EXLIImportFileImpl implements IImportFile {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         StringJoiner joiner3 = new StringJoiner(",");
         try {
-            XSSFWorkbook myExcelBook = new XSSFWorkbook(new FileInputStream(this.fileName));
-            for (Iterator<XSSFSheet> it = myExcelBook.iterator(); it.hasNext(); ) {
-                XSSFSheet sheet = it.next();
+            XSSFWorkbook myExcelBook = new XSSFWorkbook(new FileInputStream(filename));
+//            for (Iterator<XSSFSheet> it = myExcelBook.iterator(); it.hasNext(); ) {
+
+                XSSFSheet sheet = myExcelBook.getSheetAt(myExcelBook.getActiveSheetIndex());
                 Iterator<Row> rowIterator = sheet.iterator();
-                Row trow = sheet.getRow(1);
+                Row trow = sheet.getRow(0);
                 trow.forEach(cell -> joiner3.add("'" + cell.toString() + "'")
                 );
                 rowSTR = joiner3.toString();
@@ -82,7 +82,7 @@ public class EXLIImportFileImpl implements IImportFile {
                     tmp.add(builder.toString());
                     count++;
                 }
-            }
+//            }
         } catch (IOException e) {
             logger.error(e.getMessage());
         } catch (NullPointerException e) {
@@ -90,10 +90,13 @@ public class EXLIImportFileImpl implements IImportFile {
         }
 
         // TODO: 14.03.2018  ошибка при повторном создании таблицы
-        createTable(connection, cellCount, tableName, 500);
+        try {
+            createTable(connection, cellCount, tableName, 500);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         logger.info("end");
-        return tmp;*/
-       return null;
+        return tmp;
     }
 
 }

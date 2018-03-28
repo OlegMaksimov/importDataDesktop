@@ -14,7 +14,7 @@ public class ImporFileFactory {
         switch (ext) {
             case ".csv":
                 return new CSVIImportFileImpl(path);
-            case ".xls":
+            case ".xlsx":
                 return new EXLIImportFileImpl(path);
             default:
                 return null;
