@@ -23,7 +23,7 @@ public class CSVIImportFileImplTest {
     Logger logger = Logger.getLogger(this.getClass());
     @Before
     public void setUp() throws Exception {
-        path = "c:\\Users\\LSultanova\\Desktop\\import_pac\\patient.csv";
+        path = "c:\\Users\\LSultanova\\Desktop\\import_pac\\med_remov_w_dis.csv";
         importFile = new CSVIImportFileImpl(path);
         tableName = "table_name2";
     }

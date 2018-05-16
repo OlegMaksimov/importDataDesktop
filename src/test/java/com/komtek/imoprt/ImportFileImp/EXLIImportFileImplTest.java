@@ -3,13 +3,13 @@ package test.java.com.komtek.imoprt.ImportFileImp;
 
 import oracle.jdbc.driver.OracleConnection;
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
 import org.junit.Before;
 import org.junit.Test;
 import sample.Connection.JdbcConnection;
 import sample.ImportFileImp.EXLIImportFileImpl;
 import sample.inputFileService.IImportFile;
 
+import java.sql.Statement;
 import java.util.List;
 
 public class EXLIImportFileImplTest {
@@ -21,9 +21,9 @@ public class EXLIImportFileImplTest {
 
     @Before
     public void setUp() throws Exception {
-        path = "strah_polis_new1.xlsx";
+        path = "C:\\Users\\LSultanova\\Desktop\\прививки-сопоставление-disease_id.xlsx";
         importFile = new EXLIImportFileImpl(path);
-        tableName = "POLIC";
+        tableName = "TEST123";
     }
 
     @Test
@@ -37,10 +37,15 @@ public class EXLIImportFileImplTest {
 
     @Test
     public void testInsertToDB() throws Exception {
-       /* long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
         List list = importFile.parsingFile( tableName);
-        importFile.insertToDB(connection, list, tableName);
+        Statement statement =  connection.createStatement();
+        for (Object record: list
+             ) {
+            importFile.insertToDB( statement, (String) record);
+        }
+
         long finish = System.currentTimeMillis();
-        logger.info("Время выполнения " + (finish - start));*/
+        logger.info("Время выполнения " + (finish - start));
     }
 }

@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -20,15 +22,9 @@ public class JdbcConnection {
 
     private JdbcConnection() {
         Logger logger = Logger.getLogger(this.getClass());
-        try {
-
-            this.property.load(new FileInputStream("src/Property.properties"));
-            this.url = property.getProperty("db.url");
-            this.user = property.getProperty("db.user");
-            this.password = property.getProperty("db.pass");
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
+        this.url = "jdbc:oracle:thin:@188.120.246.196:1521:nvds1";
+        this.user = "VACCINATION";
+        this.password = "vaccine";
     }
 
     private JdbcConnection(String url, String user, String password) {

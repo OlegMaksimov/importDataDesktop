@@ -59,15 +59,16 @@ public class EXLIImportFileImpl implements IImportFile {
                     StringJoiner joiner2 = new StringJoiner(",");
 
                     row.forEach(cell -> {
-
-                        if ((cell.getColumnIndex() == 8) || (cell.getColumnIndex() == 4)) {
-                            System.out.println(cell.getCellType());
-
-                            if (cell.getCellType() == 0)
-                                joiner.add("'" + dateFormat.format(cell.getDateCellValue()) + "'");
-                        } else {
-                            joiner.add("'" + cell.toString() + "'");
-                        }
+// TODO: 28.03.2018 разобраться с датами 
+//                        if ((cell.getColumnIndex() == 8) || (cell.getColumnIndex() == 4)) {
+//                            System.out.println(cell.getCellType());
+//
+//                            if (cell.getCellType() == 0)
+//                                joiner.add("'" + dateFormat.format(cell.getDateCellValue()) + "'");
+//                        } else {
+//                            joiner.add("'" + cell.toString() + "'");
+//                        }
+                        joiner.add("'" + cell.toString() + "'");
                     });
                     rowSTR = joiner.toString();
                     for (int i = 0; i < joiner.toString().split(",").length; i++) {
