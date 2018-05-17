@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="299.0" prefWidth="447.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller.Controller">
   <children>
-    <TabPane layoutX="0.0" layoutY="0.0" prefHeight="299.0" prefWidth="446.9998779296875" tabClosingPolicy="UNAVAILABLE" >
+    <TabPane layoutX="0.0" layoutY="0.0" prefHeight="299.0" prefWidth="446.9998779296875" tabClosingPolicy="UNAVAILABLE">
       <tabs>
         <Tab text="данный для импорта">
           <content>
@@ -19,11 +19,13 @@
                 <Button layoutX="285.0" layoutY="113.0" mnemonicParsing="false" onAction="#openImportFile" text="открыть файл" />
                 <Button layoutX="280.0" layoutY="195.0" mnemonicParsing="false" onAction="#onClickImportData" prefHeight="27.0" prefWidth="106.0" text="импорт" />
                 <ProgressBar fx:id="pgrBar" layoutX="42.0" layoutY="199.0" prefHeight="20.0" prefWidth="174.0" progress="0.0" />
-                <Label fx:id="filename" layoutX="91.0" layoutY="108.0" text="filename" />
+                <Label fx:id="filename" layoutX="106.0" layoutY="108.0" text="filename" />
                 <TextField fx:id="tableName" layoutX="42.0" layoutY="53.0" prefWidth="174.0" />
                 <Label layoutX="296.0" layoutY="56.0" text="Имя таблицы" />
                 <Label fx:id="lblWarn" layoutX="-3.0" layoutY="77.0" text="Необходимо заполнить имя таблицы" textFill="#ff3333" visible="false" />
                 <ProgressIndicator fx:id="pgrInd" layoutX="13.0" layoutY="199.0" progress="0.0" />
+                <Button layoutX="280.0" layoutY="227.0" mnemonicParsing="false" onAction="#onImportCancel" prefHeight="27.0" prefWidth="106.0" text="отменить" />
+                <Label fx:id="status" layoutX="115.0" layoutY="233.0" text="" />
               </children>
             </AnchorPane>
           </content>
@@ -35,8 +37,8 @@
                 <TextField id="URL" fx:id="BDURL" layoutX="37.0" layoutY="40.0" prefWidth="200.0" promptText="URL" text="" />
                 <TextField fx:id="BDuser" layoutX="37.0" layoutY="76.0" prefWidth="200.0" promptText="USER" />
                 <PasswordField id="pass" fx:id="BDpass" layoutX="37.0" layoutY="112.0" prefWidth="200.0" promptText="password" />
-                <Button fx:id="testConnect" layoutX="37.0" layoutY="165.0" mnemonicParsing="false" prefWidth="83.0" text="тест" onAction="#onTestConnection"/>
-                <Button fx:id="BdApply" layoutX="154.0" layoutY="165.0" mnemonicParsing="false" text="Применить" onAction="#onApplyProperty"/>
+                <Button fx:id="testConnect" layoutX="37.0" layoutY="165.0" mnemonicParsing="false" onAction="#onTestConnection" prefWidth="83.0" text="тест" />
+                <Button fx:id="BdApply" layoutX="154.0" layoutY="165.0" mnemonicParsing="false" onAction="#onApplyProperty" text="Применить" />
                 <Label fx:id="BdStatus" layoutX="123.0" layoutY="206.0" text="Label" />
                 <Label layoutX="324.0" layoutY="43.0" text="URL" />
                 <Label layoutX="321.0" layoutY="79.0" text="USER" />

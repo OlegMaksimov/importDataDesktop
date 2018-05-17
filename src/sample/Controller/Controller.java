@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -18,11 +17,8 @@ import sample.Task.ImportData;
 import sample.inputFileService.IImportFile;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Properties;
 
 
 public class Controller {
@@ -30,6 +26,7 @@ public class Controller {
     Logger logger = Logger.getLogger(this.getClass());
     static String F_PATH = null;
     static  IImportFile FILE;
+    static  Thread IMPORT_THREAD;
     OracleConnection connection = JdbcConnection.getInstance().getConnection();
     private ImportData importDataTask;
     @FXML
@@ -52,7 +49,8 @@ public class Controller {
     private TextField BDpass;
     @FXML
     private Label BdStatus;
-
+    @FXML
+    private Label status;
 
     @FXML
     public void openImportFile() throws Exception {
@@ -89,8 +87,10 @@ public class Controller {
                 pgrBar.progressProperty().bind(importDataTask.progressProperty());
                 pgrInd.progressProperty().unbind();
                 pgrInd.progressProperty().bind(importDataTask.progressProperty());
-                new Thread(importDataTask).start();
-//             FILE.insertToDB(connection,list,tableName.getText());
+                IMPORT_THREAD = new Thread(importDataTask);
+                status.setText("Выполнение");
+                IMPORT_THREAD.start();
+
             }
             else{
               lblWarn.setVisible(true);
@@ -143,6 +143,14 @@ public class Controller {
         }catch (Exception e){
             logger.error(e.getMessage());
             throw new Exception(e);
+        }
+    }
+
+    @FXML
+    public void onImportCancel(){
+        if (IMPORT_THREAD != null) {
+            IMPORT_THREAD.stop();
+            status.setText("Отменено");
         }
     }
 }
