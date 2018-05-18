@@ -59,13 +59,15 @@ public class JdbcConnection {
         return result;
     }
 
-    public static void destroyAndReCreate(String URL, String USER, String Pass) {
+    public static void destroyAndReCreate(String URL, String USER, String Pass) throws Exception {
         Logger logger = Logger.getLogger("JDBC_CONNECTION");
         try {
             ourInstance.getConnection().close();
+            ourInstance = new JdbcConnection(URL,USER,Pass);
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new Exception(e.getMessage());
         }
-        ourInstance = new JdbcConnection(URL,USER,Pass);
+
     }
 }

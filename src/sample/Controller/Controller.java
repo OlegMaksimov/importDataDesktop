@@ -25,8 +25,8 @@ public class Controller {
 
     Logger logger = Logger.getLogger(this.getClass());
     static String F_PATH = null;
-    static  IImportFile FILE;
-    static  Thread IMPORT_THREAD;
+    static IImportFile FILE;
+    static Thread IMPORT_THREAD;
     OracleConnection connection = JdbcConnection.getInstance().getConnection();
     private ImportData importDataTask;
     @FXML
@@ -40,7 +40,9 @@ public class Controller {
     @FXML
     public ProgressIndicator pgrInd;
 
-    /**--------------------------------------Connect to BD---------------------------------------------*/
+    /**
+     * --------------------------------------Connect to BD---------------------------------------------
+     */
     @FXML
     private TextField BDURL;
     @FXML
@@ -61,7 +63,7 @@ public class Controller {
 //                new FileChooser.ExtensionFilter("Text Files", "*.txt")
                 new FileChooser.ExtensionFilter("CSV Files", "*.csv"),
                 new FileChooser.ExtensionFilter("Excel Files", "*.xlsx")
-      );
+        );
         Stage stage = new Stage();
         File selectedFile = fileChooser.showOpenDialog(stage);
 
@@ -69,6 +71,7 @@ public class Controller {
             F_PATH = selectedFile.getAbsolutePath();
             filename.setText(selectedFile.getName());
         } else {
+            logger.error("Can't open file");
             throw new Exception("Can't open file");
         }
 
@@ -78,11 +81,11 @@ public class Controller {
     @FXML
     public void onClickImportData() throws Exception {
         List list;
-        if (!(FILE == null)){
-            if(!(tableName.getText().isEmpty())){
-             lblWarn.setVisible(false);
+        if (!(FILE == null)) {
+            if (!(tableName.getText().isEmpty())) {
+                lblWarn.setVisible(false);
                 list = FILE.parsingFile(tableName.getText());
-                importDataTask = new ImportData(FILE,list);
+                importDataTask = new ImportData(FILE, list);
                 pgrBar.progressProperty().unbind();
                 pgrBar.progressProperty().bind(importDataTask.progressProperty());
                 pgrInd.progressProperty().unbind();
@@ -91,16 +94,15 @@ public class Controller {
                 status.setText("Выполнение");
                 IMPORT_THREAD.start();
 
-            }
-            else{
-              lblWarn.setVisible(true);
+            } else {
+                lblWarn.setVisible(true);
             }
         }
     }
 
     @FXML
-    public void onTestConnection(){
-        if (!BDURL.getText().isEmpty()||!BDpass.getText().isEmpty()||!BDuser.getText().isEmpty()) {
+    public void onTestConnection() {
+        if (!BDURL.getText().isEmpty() || !BDpass.getText().isEmpty() || !BDuser.getText().isEmpty()) {
             try {
                 if (JdbcConnection.testConnection(BDURL.getText(), BDuser.getText(), BDpass.getText())) {
                     BdStatus.setText("Success");
@@ -112,42 +114,46 @@ public class Controller {
                     BdStatus.setVisible(true);
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         } else {
-           BdStatus.setText("Необходимо заполнить поля.");
+            BdStatus.setText("Необходимо заполнить поля.");
             BdStatus.setVisible(true);
         }
     }
 
     @FXML
-    public void onApplyProperty(){
-        if (!BDURL.getText().isEmpty()||!BDpass.getText().isEmpty()||!BDuser.getText().isEmpty()) {
-            JdbcConnection.destroyAndReCreate(BDURL.getText(),BDuser.getText(),BDpass.getText());
-        } else {
-            BdStatus.setText("Необходимо заполнить поля.");
-            BdStatus.setVisible(true);
+    public void onApplyProperty() {
+        try {
+            if (!BDURL.getText().isEmpty() || !BDpass.getText().isEmpty() || !BDuser.getText().isEmpty()) {
+                JdbcConnection.destroyAndReCreate(BDURL.getText(), BDuser.getText(), BDpass.getText());
+                logger.debug("Изменено соединение с БД. Новое подключение " + BDURL.getText());
+            } else {
+                BdStatus.setText("Необходимо заполнить поля.");
+                BdStatus.setVisible(true);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
         }
-
     }
 
-    public  void setProgres(Double progres) throws Exception {
+    public void setProgres(Double progres) throws Exception {
         try {
-            if (pgrBar ==null || pgrInd ==null) {
+            if (pgrBar == null || pgrInd == null) {
                 pgrBar = new ProgressBar();
                 pgrInd = new ProgressIndicator();
             }
-            pgrBar.setProgress(0.0+progres);
-            pgrInd.setProgress(0.0+progres);
+            pgrBar.setProgress(0.0 + progres);
+            pgrInd.setProgress(0.0 + progres);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error(e.getMessage());
             throw new Exception(e);
         }
     }
 
     @FXML
-    public void onImportCancel(){
+    public void onImportCancel() {
         if (IMPORT_THREAD != null) {
             IMPORT_THREAD.stop();
             status.setText("Отменено");

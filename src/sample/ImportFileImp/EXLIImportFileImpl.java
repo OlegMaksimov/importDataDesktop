@@ -94,7 +94,7 @@ public class EXLIImportFileImpl implements IImportFile {
         try {
             createTable(connection, cellCount, tableName, 500);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         logger.info("end");
         return tmp;
