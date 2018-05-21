@@ -1,0 +1,27 @@
+group 'ImportData'
+version '2.0'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "sample.Main"
+sourceCompatibility = 1.8
+
+//sourceSets {
+//    main {
+//        resources.srcDirs = ["src/main"]
+//    }
+//}
+
+sourceSets.main.resources { srcDirs = ["src/main/java"]; include "**/*.*" }
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'lib', include: '*.jar')
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile "org.apache.poi:poi-ooxml:3.9"
+}
+
+
